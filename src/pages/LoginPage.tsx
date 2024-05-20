@@ -1,16 +1,30 @@
 import { TextField, Container, CssBaseline, Box, Typography, FormControlLabel, Checkbox, Button, Grid, Link } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 
+import routes from "../routes";
+import { useAuth } from '../context/AuthContext';
+
 interface IFormInput {
   username: string,
   password: string,
 }
 
 const LoginPage = () => {
-  const { register, handleSubmit } = useForm<IFormInput>()
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const { logIn } = useAuth();
+
   const onSubmit = (data: FieldValues) => {
-    console.log(data)
-  }
+    fetch(routes.loginPath(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then((response) => response.json())
+      .then((data) => logIn(data.data.token))
+  };
+
   return (
     <Container component="main" maxWidth="xs">
     <CssBaseline />
@@ -64,7 +78,7 @@ const LoginPage = () => {
           </Grid>
           <Grid item>
             <Link href="#" variant="body2">
-              {"Нет аккаунта? Зарегистрируйтесь"}
+              Регистрация
             </Link>
           </Grid>
         </Grid>
