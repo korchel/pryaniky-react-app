@@ -16,14 +16,47 @@ export const dataApi = createApi({
       headers.set('x-auth', Cookies.get('token') as string);
     },
   }),
+  tagTypes: ['data'],
   endpoints: (builder) => ({
     getData: builder.query<IData[], void>({
       query: () => ({
         url: '/get',
       }),
+      providesTags: ['data'],
       transformResponse: (response: IResponse): IData[] => response.data,
-    })
-  })
+    }),
+
+    createData: builder.mutation({
+      query: (data) => ({
+        url: '/create',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['data'],
+    }),
+    
+    deleteData: builder.mutation({
+      query: (id) => ({
+        url: `/delete/${id}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['data'],
+    }),
+
+    updateData: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/set/${id}`,
+        method: 'POST',
+        body: {id, data},
+      }),
+      invalidatesTags: ['data'],
+    }),
+  }),
 });
 
-export const { useGetDataQuery } = dataApi;
+export const {
+  useGetDataQuery,
+  useDeleteDataMutation,
+  useCreateDataMutation,
+  useUpdateDataMutation
+} = dataApi;
