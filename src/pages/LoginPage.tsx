@@ -1,8 +1,9 @@
-import { TextField, Container, CssBaseline, Box, Typography, FormControlLabel, Checkbox, Button, Grid, Link } from "@mui/material";
+import { TextField, Container, CssBaseline, Box, Typography, FormControlLabel, Checkbox, Button, Grid, Link, makeStyles } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 
 import routes from "../routes";
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
   username: string,
@@ -12,6 +13,7 @@ interface IFormInput {
 const LoginPage = () => {
   const { register, handleSubmit } = useForm<IFormInput>();
   const { logIn } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = (data: FieldValues) => {
     fetch(routes.loginPath(), {
@@ -22,18 +24,24 @@ const LoginPage = () => {
       },
       body: JSON.stringify(data),
     }).then((response) => response.json())
-      .then((data) => logIn(data.data.token))
+      .then((data) => {
+        logIn(data.data.token);
+        navigate(routes.contentRoute());
+      })
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" sx={{height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
     <CssBaseline />
     <Box
       sx={{
-        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        maxWidth: "500px",
+        padding: 4,
+        borderRadius: 2,
+        boxShadow: 3
       }}
     >
       <Typography component="h1" variant="h5">
@@ -58,10 +66,6 @@ const LoginPage = () => {
           type="password"
           id="password"
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Запомнить меня"
-        />
         <Button
           type="submit"
           fullWidth
@@ -84,6 +88,7 @@ const LoginPage = () => {
         </Grid>
       </Box>
     </Box>
+
   </Container>
   );
 };
