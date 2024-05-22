@@ -3,7 +3,7 @@ import { RootStateType } from '.';
 
 interface IState {
   type: null | 'edit' | 'add' | 'delete',
-  id: null | number,
+  id: null | string,
   open: boolean,
 }
 
@@ -30,8 +30,8 @@ const modalSlice = createSlice({
 
 export const { openModal, closeModal } = modalSlice.actions;
 
-export const getModalType = (state: RootStateType) => state.modalSlice.type;
-export const getModalOpen = (state: RootStateType) => state.modalSlice.open;
-export const getCurrentDataId = (state: RootStateType) => state.modalSlice.id;
+export const getModalType = (state: RootStateType): string | null => state.modalSlice.type;
+export const getModalOpen = (state: RootStateType): boolean => state.modalSlice.open;
+export const getCurrentDataId = (state: RootStateType): string | null => state.modalSlice.id;
 
 export default modalSlice.reducer;

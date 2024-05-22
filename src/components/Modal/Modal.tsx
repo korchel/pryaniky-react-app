@@ -3,17 +3,10 @@ import MaterialModal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { Box } from "@mui/material";
 
-import AddModal from "./AddModal";
-import EditModal from "./EditModal";
-import DeleteModal from "./DeleteModal";
+import Add from "./components/Add";
+import Edit from "./components/Edit";
+import Delete from "./components/Delete";
 import { closeModal, getModalOpen, getModalType } from "../../store/modalSlice";
-
-
-const modals = {
-  add: AddModal,
-  edit: EditModal,
-  delete: DeleteModal,
-};
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -38,8 +31,6 @@ const Modal: React.FC = () => {
     dispatch(closeModal());
   };
 
-  const Component = modals[modalType!];
-
   return (
     <MaterialModal
       open={open}
@@ -49,9 +40,9 @@ const Modal: React.FC = () => {
     >
       <Fade in={open}>
         <Box sx={style}>
-          <>
-            {modalType && <Component />}
-          </>
+          {modalType === 'edit' && <Edit />}
+          {modalType === 'delete' && <Delete />}
+          {modalType === 'add' && <Add />}
         </Box>
       </Fade>
     </MaterialModal>

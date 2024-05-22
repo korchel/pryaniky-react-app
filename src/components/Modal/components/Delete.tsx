@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useDeleteDataMutation } from "../../store/dataApi";
+import { useDeleteDataMutation } from "../../../store/dataApi";
 
 import { Box, Typography, Button } from "@mui/material";
-import { closeModal, getCurrentDataId } from "../../store/modalSlice";
+import { closeModal, getCurrentDataId } from "../../../store/modalSlice";
 
-const DeleteModal = () => {
+const Delete = () => {
   const dispatch = useDispatch();
   const [deleteData] = useDeleteDataMutation();
   const currentDataId = useSelector(getCurrentDataId);
@@ -29,4 +29,4 @@ const DeleteModal = () => {
   )
 }
 
-export default DeleteModal;
+export default Delete;

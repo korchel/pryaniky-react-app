@@ -1,10 +1,14 @@
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, IconButton, Box, ButtonGroup } from '@mui/material';
+import {
+  Table, TableContainer, TableHead, TableRow,
+  TableCell, TableBody, Paper, IconButton,
+  Box, ButtonGroup, CircularProgress,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { nanoid } from "@reduxjs/toolkit";
 
-import { useGetDataQuery as getData} from "../store/dataApi";
+import { useGetDataQuery as getData } from "../store/dataApi";
 import { IData } from '../types';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../store/modalSlice';
@@ -26,11 +30,11 @@ const stickyLeft = {
 const ContentPage = () => {
   const dispatch = useDispatch();
 
-  const { data } = getData();
+  const { data, isLoading } = getData();
 
 
   const handleDelete = (id: string): void => {
-    dispatch(openModal({ type: 'delete', open: true }));
+    dispatch(openModal({ type: 'delete', open: true, id }));
   };
 
   const handleAdd = (): void => {
@@ -41,9 +45,17 @@ const ContentPage = () => {
     dispatch(openModal({ type: 'edit', open: true, id}));
   }
   const textFields = Object.entries(entities).map(([key, value]) => ({name: value, id: nanoid()}));
-  console.log(data)
+
+  if (isLoading) {
+    return (
+      <Box component="main" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <Box component="main" sx={{padding: '50px', backgroundColor: '#f2f6fc', height: '100vh', position: 'relative'}}>
+    <Box component="main" sx={{ padding: '50px', backgroundColor: '#f2f6fc', height: '100vh', position: 'relative' }}>
       <TableContainer component={Paper} >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

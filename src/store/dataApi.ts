@@ -47,7 +47,7 @@ export const dataApi = createApi({
       query: ({id, data}) => ({
         url: `/set/${id}`,
         method: 'POST',
-        body: {id, data},
+        body: data,
       }),
       invalidatesTags: ['data'],
     }),
