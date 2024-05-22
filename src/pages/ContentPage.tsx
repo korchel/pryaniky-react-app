@@ -2,32 +2,45 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from "@reduxjs/toolkit";
 
-import { useGetDataQuery as getData, useCreateDataMutation, useDeleteDataMutation} from "../store/dataApi";
+import { useGetDataQuery as getData} from "../store/dataApi";
 import { IData } from '../types';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../store/modalSlice';
+import Modal from '../components/Modal/Modal';
+import entities from '../entities';
+
+const stickyRight = {
+  position: 'sticky',
+  right: '0',
+  background: "white",
+}
+
+const stickyLeft = {
+  position: 'sticky',
+  left: '0',
+  background: "white",
+}
 
 const ContentPage = () => {
   const dispatch = useDispatch();
 
   const { data } = getData();
-  const [deleteDta] = useDeleteDataMutation();
-  const [createData] = useCreateDataMutation();
+
 
   const handleDelete = (id: string): void => {
-    deleteDta(id);
+    dispatch(openModal({ type: 'delete', open: true }));
   };
 
   const handleAdd = (): void => {
     dispatch(openModal({ type: 'add', open: true }));
   }
 
-  const handleEdit = () => {
-
+  const handleEdit = (id: string): void => {
+    dispatch(openModal({ type: 'edit', open: true, id}));
   }
-
+  const textFields = Object.entries(entities).map(([key, value]) => ({name: value, id: nanoid()}));
   console.log(data)
   return (
     <Box component="main" sx={{padding: '50px', backgroundColor: '#f2f6fc', height: '100vh', position: 'relative'}}>
@@ -35,16 +48,11 @@ const ContentPage = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" sx={{position: 'sticky', left: '0', background: "white"}}>№</TableCell>
-              <TableCell>Статус согласования</TableCell>
-              <TableCell>Количество работников</TableCell>
-              <TableCell>Тип документа</TableCell>
-              <TableCell>Название документа</TableCell>
-              <TableCell>Подпись работодателя</TableCell>
-              <TableCell>Подпись работника</TableCell>
-              <TableCell>Дата подписи работодателя</TableCell>
-              <TableCell>Дата подписи работника</TableCell>
-              <TableCell sx={{position: 'sticky', right: '0', background: "white"}}>Действия</TableCell>
+              <TableCell align="center" sx={stickyLeft}>№</TableCell>
+              {textFields.map(({name, id}) => (
+                <TableCell key={id}>{name}</TableCell>
+              ))}
+              <TableCell sx={stickyRight}>Действия</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -53,18 +61,18 @@ const ContentPage = () => {
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell align="center" sx={{position: 'sticky', left: '0', background: "white"}}>{index + 1}</TableCell>
+                <TableCell align="center" sx={stickyLeft}>{index + 1}</TableCell>
                 {Object.entries(row).map(([key, value]) => key === 'id' ? null : 
-                  (<TableCell key={uuidv4()} component="th" scope="row">
+                  (<TableCell key={nanoid()} component="th" scope="row">
                     {value}
                   </TableCell>)
                 )}
-                <TableCell sx={{position: 'sticky', right: '0', background: "white"}} >
+                <TableCell sx={stickyRight} >
                   <ButtonGroup variant="text">
                     <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
                       <DeleteIcon />
                     </IconButton>
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" onClick={() => handleEdit(row.id)}>
                       <EditIcon />
                     </IconButton>
                   </ButtonGroup>
@@ -77,6 +85,7 @@ const ContentPage = () => {
       <IconButton sx={{ position: 'absolute', right: '50px'}} onClick={handleAdd}>
         <AddCircleIcon />
       </IconButton>
+      <Modal />
     </Box>
   );
 };

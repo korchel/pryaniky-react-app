@@ -1,4 +1,4 @@
-export interface IData {
+export interface fieldNames {
   companySigDate: string,
   companySignatureName: string,
   documentName: string,
@@ -7,5 +7,8 @@ export interface IData {
   employeeNumber: string,
   employeeSigDate: string,
   employeeSignatureName: string,
+}
+
+export interface IData extends fieldNames {
   id: string,
 }

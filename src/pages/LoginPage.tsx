@@ -88,7 +88,6 @@ const LoginPage = () => {
         </Grid>
       </Box>
     </Box>
-
   </Container>
   );
 };

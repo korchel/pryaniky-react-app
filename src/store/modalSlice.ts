@@ -32,5 +32,6 @@ export const { openModal, closeModal } = modalSlice.actions;
 
 export const getModalType = (state: RootStateType) => state.modalSlice.type;
 export const getModalOpen = (state: RootStateType) => state.modalSlice.open;
+export const getCurrentDataId = (state: RootStateType) => state.modalSlice.id;
 
 export default modalSlice.reducer;
