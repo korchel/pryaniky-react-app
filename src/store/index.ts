@@ -1,14 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import { dataApi } from './dataApi';
-import modalSlice from './modalSlice';
+import { dataApi } from "./dataApi";
+import modalSlice from "./modalSlice";
 
 const store = configureStore({
   reducer: {
     [dataApi.reducerPath]: dataApi.reducer,
     modalSlice,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(dataApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(dataApi.middleware),
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;

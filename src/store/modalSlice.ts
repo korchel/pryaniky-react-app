@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootStateType } from '.';
+import { createSlice } from "@reduxjs/toolkit";
+import { RootStateType } from ".";
 
 interface IState {
-  type: null | 'edit' | 'add' | 'delete',
-  id: null | string,
-  open: boolean,
+  type: null | "edit" | "add" | "delete";
+  id: null | string;
+  open: boolean;
 }
 
 const initialState: IState = {
@@ -14,7 +14,7 @@ const initialState: IState = {
 };
 
 const modalSlice = createSlice({
-  name: 'modal',
+  name: "modal",
   initialState,
   reducers: {
     openModal: (state, { payload }) => {
@@ -30,8 +30,11 @@ const modalSlice = createSlice({
 
 export const { openModal, closeModal } = modalSlice.actions;
 
-export const getModalType = (state: RootStateType): string | null => state.modalSlice.type;
-export const getModalOpen = (state: RootStateType): boolean => state.modalSlice.open;
-export const getCurrentDataId = (state: RootStateType): string | null => state.modalSlice.id;
+export const getModalType = (state: RootStateType): string | null =>
+  state.modalSlice.type;
+export const getModalOpen = (state: RootStateType): boolean =>
+  state.modalSlice.open;
+export const getCurrentDataId = (state: RootStateType): string | null =>
+  state.modalSlice.id;
 
 export default modalSlice.reducer;

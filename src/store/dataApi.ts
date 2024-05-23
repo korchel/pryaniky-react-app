@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import Cookies from 'js-cookie';
-import { IData } from '../types';
-
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
+import { IData } from "../types";
 
 interface IResponse {
   data: IData[];
@@ -9,47 +8,48 @@ interface IResponse {
 }
 
 export const dataApi = createApi({
-  reducerPath: 'data',
+  reducerPath: "data",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs',
+    baseUrl:
+      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs",
     prepareHeaders: (headers) => {
-      headers.set('x-auth', Cookies.get('token') as string);
+      headers.set("x-auth", Cookies.get("token") as string);
     },
   }),
-  tagTypes: ['data'],
+  tagTypes: ["data"],
   endpoints: (builder) => ({
     getData: builder.query<IData[], void>({
       query: () => ({
-        url: '/get',
+        url: "/get",
       }),
-      providesTags: ['data'],
+      providesTags: ["data"],
       transformResponse: (response: IResponse): IData[] => response.data,
     }),
 
     createData: builder.mutation({
       query: (data) => ({
-        url: '/create',
-        method: 'POST',
+        url: "/create",
+        method: "POST",
         body: data,
       }),
-      invalidatesTags: ['data'],
+      invalidatesTags: ["data"],
     }),
-    
+
     deleteData: builder.mutation({
       query: (id) => ({
         url: `/delete/${id}`,
-        method: 'POST',
+        method: "POST",
       }),
-      invalidatesTags: ['data'],
+      invalidatesTags: ["data"],
     }),
 
     updateData: builder.mutation({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         url: `/set/${id}`,
-        method: 'POST',
+        method: "POST",
         body: data,
       }),
-      invalidatesTags: ['data'],
+      invalidatesTags: ["data"],
     }),
   }),
 });
@@ -58,5 +58,5 @@ export const {
   useGetDataQuery,
   useDeleteDataMutation,
   useCreateDataMutation,
-  useUpdateDataMutation
+  useUpdateDataMutation,
 } = dataApi;
