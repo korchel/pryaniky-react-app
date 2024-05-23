@@ -47,9 +47,9 @@ const Form: React.FC<IFormProps> = ({
   }));
 
   useEffect(() => {
-    setFocus('documentStatus');
+    setFocus("documentStatus");
   });
-  
+
   return (
     <Stack spacing={2} component="form" onSubmit={handleSubmit(onSubmit)}>
       {textFields.map(({ field, placeholder, id }, index) => {
@@ -88,7 +88,7 @@ const Form: React.FC<IFormProps> = ({
             autoFocus={index === 0}
             sx={{ pt: 1 }}
             required={field === "documentName" || field === "documentStatus"}
-            error={Boolean(errors[field as keyof fieldNames])}
+            error={!!errors[field as keyof fieldNames]}
             helperText={errors[field as keyof fieldNames]?.message}
           />
         );

@@ -4,7 +4,7 @@ const routes = {
   loginRoute: () => "/login",
   signupRoute: () => "/signup",
   contentRoute: () => "/",
-  recoverPasswordRoute: () => "/login",
+  recoverPasswordRoute: () => "/recover",
   loginPath: () => [apiPath, "login"].join("/"),
 };
 

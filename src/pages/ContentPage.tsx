@@ -59,12 +59,11 @@ const ContentPage = () => {
   if (isLoading) {
     return (
       <Box
-        component="div"
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "100vh",
+          minHeight: "100%",
         }}
       >
         <CircularProgress />

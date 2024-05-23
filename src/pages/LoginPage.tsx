@@ -21,7 +21,11 @@ interface IFormInput {
 }
 
 const LoginPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
   const { logIn } = useAuth();
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
@@ -50,10 +54,10 @@ const LoginPage = () => {
   };
 
   return (
-    <Container
-      component="main"
+    <Box
       sx={{
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -81,7 +85,9 @@ const LoginPage = () => {
           sx={{ mt: 1 }}
         >
           <TextField
-            {...register("username", { required: {value: true, message: 'Обязательное поле'} })}
+            {...register("username", {
+              required: { value: true, message: "Обязательное поле" },
+            })}
             margin="normal"
             required
             fullWidth
@@ -92,7 +98,9 @@ const LoginPage = () => {
             helperText={errors.username?.message}
           />
           <TextField
-            {...register("password", { required: {value: true, message: 'Обязательное поле'} })}
+            {...register("password", {
+              required: { value: true, message: "Обязательное поле" },
+            })}
             margin="normal"
             required
             fullWidth
@@ -102,7 +110,11 @@ const LoginPage = () => {
             error={!!errors.password}
             helperText={errors.password?.message}
           />
-          {authFailed && <Typography variant="body2" sx={{color: 'red'}}>Неправильное имя пользователя или пароль</Typography>}
+          {authFailed && (
+            <Typography variant="body2" color="#c62828">
+              Неправильное имя пользователя или пароль
+            </Typography>
+          )}
           <Button
             type="submit"
             fullWidth
@@ -114,19 +126,19 @@ const LoginPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href={routes.recoverPasswordRoute()} variant="body2">
                 Забыли пароль?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href={routes.signupRoute()} variant="body2">
                 Регистрация
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

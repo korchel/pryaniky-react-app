@@ -1,1 +1,1 @@
-[DEPLOY]('https://pryaniky-react-app.vercel.app/login')
+[DEPLOY](https://pryaniky-react-app.vercel.app/login)

@@ -5,7 +5,7 @@ import {
 import { FieldValues, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import isEqual from 'lodash.isequal';
+import isEqual from "lodash.isequal";
 
 import { IData, fieldNames } from "../../../types";
 import { closeModal, getCurrentDataId } from "../../../store/modalSlice";

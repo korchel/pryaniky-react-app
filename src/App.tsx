@@ -19,6 +19,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import Header from "./components/Header/Header";
 import NotfoundPage from "./pages/NotFoundPage";
 import { Container } from "@mui/material";
+import RecoverPasswordPage from "./pages/RecoverPasswordPage";
 
 const LoggedInRoute = () => {
   const { userData } = useAuth();
@@ -35,10 +36,7 @@ function App() {
     <Provider store={store}>
       <AuthProvider>
         <Header />
-        <Container
-          component="main"
-          sx={{ height: "100vh", display: "flex", flexDirection: "column" }}
-        >
+        <Container component="main" sx={{ height: "calc(100vh - 64px)" }}>
           <BrowserRouter>
             <Routes>
               <Route path={routes.contentRoute()} element={<LoggedInRoute />}>
@@ -49,6 +47,15 @@ function App() {
               </Route>
               <Route path={routes.signupRoute()} element={<LoggedOutRoute />}>
                 <Route path={routes.signupRoute()} element={<SignupPage />} />
+              </Route>
+              <Route
+                path={routes.recoverPasswordRoute()}
+                element={<RecoverPasswordPage />}
+              >
+                <Route
+                  path={routes.recoverPasswordRoute()}
+                  element={<RecoverPasswordPage />}
+                />
               </Route>
               <Route path="*" element={<NotfoundPage />} />
             </Routes>

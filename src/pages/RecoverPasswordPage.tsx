@@ -1,9 +1,20 @@
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+
+const center = {
+  height: "100vh",
+  flexGrow: "1",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignContent: "center",
+};
 
 const RecoverPasswordPage = () => (
-  <Typography component="h1">
-    Здесь пока ничего нет. Зайдите по-позже.
-  </Typography>
+  <Box component="div" sx={center}>
+    <Typography variant="h6" align="center">
+      Здесь пока ничего нет. Зайдите попозже.
+    </Typography>
+  </Box>
 );
 
 export default RecoverPasswordPage;

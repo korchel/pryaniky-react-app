@@ -12,8 +12,8 @@ const center = {
 };
 
 const NotfoundPage = () => (
-  <Box component="div" sx={center}>
-    <Typography align="center" component="h1">
+  <Box sx={center}>
+    <Typography align="center" variant="h6">
       Страница не найдена
     </Typography>
     <Link align="center" href={routes.contentRoute()}>
