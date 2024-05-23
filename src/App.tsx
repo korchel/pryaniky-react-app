@@ -34,11 +34,11 @@ function App() {
   return (
     <Provider store={store}>
       <AuthProvider>
+        <Header />
         <Container
           component="main"
           sx={{ height: "100vh", display: "flex", flexDirection: "column" }}
         >
-          <Header />
           <BrowserRouter>
             <Routes>
               <Route path={routes.contentRoute()} element={<LoggedInRoute />}>

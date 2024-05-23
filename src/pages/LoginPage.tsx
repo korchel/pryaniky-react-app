@@ -21,12 +21,11 @@ interface IFormInput {
 }
 
 const LoginPage = () => {
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const { logIn } = useAuth();
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
   const [authFailed, setauthFailed] = useState<boolean>(false);
-
   const onSubmit = (data: FieldValues) => {
     setauthFailed(false);
     setButtonDisabled(true);
@@ -82,26 +81,28 @@ const LoginPage = () => {
           sx={{ mt: 1 }}
         >
           <TextField
-            {...register("username")}
+            {...register("username", { required: {value: true, message: 'Обязательное поле'} })}
             margin="normal"
             required
             fullWidth
             id="username"
             label="Имя пользователя"
             autoFocus
-            error={authFailed}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
           <TextField
-            {...register("password")}
+            {...register("password", { required: {value: true, message: 'Обязательное поле'} })}
             margin="normal"
             required
             fullWidth
             label="Пароль"
             type="password"
             id="password"
-            error={authFailed}
-            helperText={"Неправильное имя пользователя или пароль"}
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
+          {authFailed && <Typography variant="body2" sx={{color: 'red'}}>Неправильное имя пользователя или пароль</Typography>}
           <Button
             type="submit"
             fullWidth
