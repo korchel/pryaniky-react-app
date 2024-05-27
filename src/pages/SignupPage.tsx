@@ -1,6 +1,7 @@
 import { Typography, Box } from "@mui/material";
 
 const center = {
+  height: "100vh",
   flexGrow: "1",
   display: "flex",
   flexDirection: "column",

@@ -50,7 +50,7 @@ function App() {
               </Route>
               <Route
                 path={routes.recoverPasswordRoute()}
-                element={<RecoverPasswordPage />}
+                element={<LoggedOutRoute />}
               >
                 <Route
                   path={routes.recoverPasswordRoute()}
